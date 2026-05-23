@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="es">
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>OSINT Reporter</title>
+<script src="https://cdn.tailwindcss.com"></script></head>
+<body class="bg-gray-50 min-h-screen flex items-center justify-center p-4">
+<div class="bg-white p-8 rounded-2xl shadow-xl w-full max-w-lg">
+<h1 class="text-2xl font-bold mb-2">🔍 OSINT Reporter</h1>
+<p class="text-gray-500 mb-6 text-sm">Ingresa nombre, empresa, evento o URL. Recibe un PDF automatizado.</p>
+<form id="f" class="space-y-4">
+<input id="q" required placeholder="Objetivo a investigar..." class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 outline-none">
+<select id="c" class="w-full px-4 py-2 border rounded-lg"><option value="particular">👤 Particular</option><option value="empresa">🏢 Empresa</option><option value="gobierno">🏛️ Gobierno/Política</option></select>
+<button type="submit" class="w-full bg-blue-600 hover:bg-blue-700 text-white py-2 rounded-lg transition">🚀 Generar Reporte PDF</button>
+</form>
+<div id="s" class="mt-4 hidden text-center"><span class="animate-spin inline-block w-4 h-4 border-2 border-gray-300 border-t-blue-600 rounded-full mr-2"></span> Procesando...</div>
+<a id="d" href="#" download class="mt-6 hidden block bg-green-600 hover:bg-green-700 text-white text-center py-2 rounded-lg">📥 Descargar PDF</a>
+</div>
+<script>
+document.getElementById('f').onsubmit=async e=>{e.preventDefault();const b=document.querySelector('button'),s=document.getElementById('s'),d=document.getElementById('d');b.disabled=true;b.classList.add('opacity-50');s.classList.remove('hidden');d.classList.add('hidden');try{const r=await fetch('/api/generate',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({query:document.getElementById('q').value,category:document.getElementById('c').value})});const j=await r.json();d.href=j.pdf_url;d.classList.remove('hidden')}catch(err){s.innerHTML=`<span class="text-red-500">❌ ${err.message}</span>`}finally{b.disabled=false;b.classList.remove('opacity-50')}};
+</script></body></html>
