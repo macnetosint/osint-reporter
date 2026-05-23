@@ -1,0 +1,9 @@
+<!DOCTYPE html><html><head><meta charset="utf-8"><style>@page{margin:2cm}body{font-family:Arial,sans-serif;color:#222;line-height:1.5}h1{color:#1e3a8a;border-bottom:2px solid #2563eb;padding-bottom:0.5rem}.meta{color:#64748b;font-size:0.9rem;margin:1rem 0;display:flex;gap:1.5rem;flex-wrap:wrap}.meta span{background:#f1f5f9;padding:0.3rem 0.6rem;border-radius:4px}.section{margin:1.5rem 0}.section h2{color:#0f172a;border-left:4px solid #2563eb;padding-left:0.5rem}.card{background:#f8fafc;border:1px solid #e2e8f0;padding:0.8rem;border-radius:6px;margin-bottom:0.5rem}a{color:#2563eb;text-decoration:none}.footer{margin-top:2rem;padding-top:1rem;border-top:1px solid #cbd5e1;font-size:0.75rem;color:#64748b;text-align:center}table{width:100%;border-collapse:collapse;margin-top:0.5rem}th,td{border:1px solid #cbd5e1;padding:0.5rem;text-align:left;font-size:0.85rem}th{background:#e2e8f0}</style></head><body>
+<h1>{{ cat_label }}</h1>
+<p><strong>Objetivo:</strong> {{ data.query }}</p>
+<div class="meta"><span>📅 {{ data.timestamp }}</span><span>🌐 Fuente: Open Source</span></div>
+<div class="section"><h2>📌 Resumen</h2><div class="card">{{ data.summary }}</div></div>
+{% if data.web %}<div class="section"><h2>🌐 Fuentes Web</h2>{% for i in data.web %}<div class="card"><strong>{{ i.title }}</strong><br><span style="font-size:0.85rem;color:#475569;">{{ i.snippet }}</span><br><a href="{{ i.url }}">{{ i.url[:65] }}...</a></div>{% endfor %}</div>{% endif %}
+{% if data.news %}<div class="section"><h2>📰 Noticias</h2><table><tr><th>Medio</th><th>Título</th><th>Enlace</th></tr>{% for i in data.news %}<tr><td>{{ i.source }} {% if i.date %}• {{ i.date }}{% endif %}</td><td>{{ i.title }}</td><td><a href="{{ i.url }}">Ver</a></td></tr>{% endfor %}</table></div>{% endif %}
+<div class="footer">⚠️ Informe generado automáticamente con fines de inteligencia abierta. Verifique siempre la legalidad y vigencia de la información.</div>
+</body></html>
